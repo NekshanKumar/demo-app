@@ -2,36 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import Button from "../../ui/buttons/Button";
 
-function SyncLine() {
-  return (
-    <div className="hidden lg:flex flex-col items-center justify-center w-16 h-full mx-1">
-      <div className="flex items-center justify-center relative w-full h-8">
-        <div className="w-full h-1 bg-green-400 rounded-full opacity-70 animate-pulse"></div>
-        <div className="absolute top-1 left-0 w-full h-1 flex justify-between items-center pointer-events-none">
-          {[0,1,2,3].map(i =>
-            <div
-              key={i}
-              className="w-2 h-2 rounded-full bg-green-500 shadow-sm"
-              style={{
-                animation: 'moveDot 1.2s linear infinite',
-                animationDelay: `${i * 0.2}s`
-              }}
-            />
-          )}
-        </div>
-        <style>{`
-          @keyframes moveDot {
-            0% {transform: translateX(0);}
-            50% {transform: translateX(40px);}
-            100% {transform: translateX(0);}
-          }
-        `}</style>
-      </div>
-      <div className="mt-2 text-xs text-green-700 font-semibold tracking-wide">Verifying identity...</div>
-    </div>
-  );
-}
-
 export default function FaceCheckModal({ profileImg, mode, onSuccess, onCancel }) {
   const videoRef = useRef();
   const canvasRef = useRef();
@@ -55,12 +25,12 @@ export default function FaceCheckModal({ profileImg, mode, onSuccess, onCancel }
     }
     load();
     startCamera();
-return () => {
-  mounted = false;
-  stopCamera();
-  intervals.current.forEach(i => clearInterval(i));
-  intervals.current = [];
-};
+    return () => {
+      mounted = false;
+      stopCamera();
+      intervals.current.forEach(i => clearInterval(i));
+      intervals.current = [];
+    };
   }, []);
 
   async function startCamera() {
@@ -101,7 +71,7 @@ return () => {
     setCoordinates(await getCoordinates());
     stopCamera();
     setAnimateMatch(true);
-    setTimeout(() => compare(), 1200);
+    setTimeout(() => compare(), 200);
   }
 
   async function getCoordinates() {
@@ -191,14 +161,7 @@ return () => {
                 </div>
               </div>
             )}
-            {(captured && animateMatch) && (
-              <div className="w-full h-64 flex items-center justify-center gap-8">
-                <img src={captured} alt="Captured" className="rounded-full w-32 h-32 object-cover border-2 border-green-300 shadow" />
-                <SyncLine />
-                <img src={profileImg} alt="Profile" className="rounded-full w-32 h-32 object-cover border-2 border-gray-300 shadow" />
-              </div>
-            )}
-            {captured && !animateMatch && (
+            {captured && (
               <div className="w-full h-64 flex items-center justify-center gap-8">
                 <img src={captured} alt="Captured" className="rounded-full w-32 h-32 object-cover border-4 border-green-300 shadow" />
                 <img src={profileImg} alt="Profile" className="rounded-full w-32 h-32 object-cover border-4 border-gray-300 shadow" />
