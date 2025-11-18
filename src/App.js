@@ -6,8 +6,11 @@ import Layout from "./pages/layout";
 import ProtectedRoute from "./ProtectedRoute";
 import DashboardPage from "./pages/userPanel/dashboard";
 import UserProfilePage from "./pages/userPanel/userProfile";
+import AdminPanelPage from "./pages/userPanel/AdminPanel";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function AppRoutes() {
+export default function AppRoutes() {
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -24,11 +27,11 @@ function AppRoutes() {
             <Route index element={<DashboardPage />} />
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="userProfile" element={<UserProfilePage />} />
+            <Route path="admin" element={<AdminPanelPage />} />
           </Route>
         </Routes>
+        <ToastContainer position="top-center" autoClose={2500} hideProgressBar closeOnClick pauseOnHover />
       </BrowserRouter>
     </AuthProvider>
   );
 }
-
-export default AppRoutes;
