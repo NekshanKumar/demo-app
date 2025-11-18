@@ -22,7 +22,6 @@
     "react-phone-number-input": "^3.4.13",
     "react-router-dom": "^7.9.5",
     "react-scripts": "5.0.1",
-    "react-table": "^7.8.0",
     "react-toastify": "^11.0.5",
     "recharts": "^3.4.1",
     "tailwind-scrollbar-hide": "^4.0.0",
