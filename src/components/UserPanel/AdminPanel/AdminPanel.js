@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { FaPlus, FaEdit, FaTrash, FaCog } from "react-icons/fa";
 import Button from "../../ui/buttons/Button";
 import InputField from "../../ui/InputFields/InputField";
-import PhoneInputField from "../../ui/InputFields/PhoneInputField";
 import Modal from "../../ui/modals/Modal";
 import ReusableTable from "../../ui/tables/ReusableTable";
+import UserModal from "./UserModal";
 
 function getInitial() {
   return (
@@ -84,12 +84,12 @@ export default function AdminPanel() {
   ]}
 />
 
-      <UserModal
-        open={openModal}
-        onClose={() => { setOpenModal(false); setEditUser(null); }}
-        onSave={handleSave}
-        user={editUser}
-      />
+    <UserModal
+  open={openModal}
+  onClose={() => { setOpenModal(false); setEditUser(null); }}
+  onSave={handleSave}
+  user={editUser}
+/>
       <SettingsModal
         open={!!openSettings}
         onClose={() => setOpenSettings(null)}
@@ -100,62 +100,7 @@ export default function AdminPanel() {
   );
 }
 
-function UserModal({ open, onClose, onSave, user }) {
-  const [form, setForm] = useState({
-    fullName: "", username: "", email: "", phone: "", status: "Active", password: "", confirmPassword: ""
-  });
-  const [error, setError] = useState("");
-  useEffect(() => {
-    if (user) setForm({ ...user, password: "", confirmPassword: "" });
-    else setForm({ fullName: "", username: "", email: "", phone: "", status: "Active", password: "", confirmPassword: "" });
-  }, [open, user]);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm(f => ({ ...f, [name]: value }));
-  }
-  function handlePhone(v) {
-    setForm(f => ({ ...f, phone: v }));
-  }
-  function validatePassword(p) {
-    return /[A-Z]/.test(p) && /[a-z]/.test(p) && /[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p) && p.length >= 8;
-  }
-  function onSubmit(e) {
-    e.preventDefault();
-    if (!form.fullName || !form.username || !form.email || !form.phone || !form.status) { setError("All fields required"); return; }
-    if (!validatePassword(form.password)) { setError("Password does not meet requirements"); return; }
-    if (form.password !== form.confirmPassword) { setError("Passwords do not match"); return; }
-    onSave({ ...form, password: undefined, confirmPassword: undefined });
-  }
-  return (
-    <Modal open={open} onClose={onClose}>
-      <div className="text-xl font-semibold mb-4">{user ? "Edit Employee" : "Add Employee"}</div>
-      <form onSubmit={onSubmit} className="space-y-2">
-        <InputField label="Full Name" name="fullName" value={form.fullName} onChange={handleChange} />
-        <InputField label="User Name" name="username" value={form.username} onChange={handleChange} />
-        <InputField label="Email" name="email" value={form.email} onChange={handleChange} type="email" />
-        <PhoneInputField label="Phone Number" value={form.phone} onChange={handlePhone} />
-        <InputField label="Set Password" name="password" value={form.password} onChange={handleChange} type="password" />
-        <InputField label="Confirm Password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} type="password" />
-        <div className="mb-3">
-          <label className="block text-sm font-medium mb-1">Status</label>
-          <select name="status" value={form.status} onChange={handleChange} className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary500">
-            <option value="Active">Active</option>
-            <option value="Blocked">Blocked</option>
-          </select>
-        </div>
-        <div className="flex gap-3 justify-end mt-2">
-          <Button variant="outline" onClick={onClose} type="button">Cancel</Button>
-          <Button type="submit">{user ? "Save" : "Add"}</Button>
-        </div>
-        {error && <div className="mt-2 text-red-600 font-semibold">{error}</div>}
-        <div className="text-xs mt-1 text-gray-500">
-          Password must be 8+ chars, use upper, lower, number & symbol.
-        </div>
-      </form>
-    </Modal>
-  );
-}
 
 function SettingsModal({ open, onClose, onSave, user }) {
   const [form, setForm] = useState({ locationLat: "", locationLng: "", ip: "", profilePic: "" });

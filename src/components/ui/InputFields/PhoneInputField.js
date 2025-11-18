@@ -3,15 +3,20 @@ import "react-phone-input-2/lib/style.css";
 
 export default function PhoneInputField({ value, onChange, label }) {
   return (
-    <div className="mb-3">
-      <label className="block !w-[744px] text-sm font-medium mb-1">{label}</label>
-      <PhoneInput
-        country={'us'}
-        value={value}
-        onChange={onChange}
-        dropdownClass="z-50"
-        placeholder="Phone number"
-      />
+    <div className="mb-3 w-full">
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <div className="w-full">
+        <PhoneInput
+          country={'in'}
+          value={value}
+          onChange={onChange}
+          containerClass="!w-full"
+          inputClass="!w-full !h-10 !text-base border rounded focus:ring-2 focus:ring-primary500"
+          buttonClass="border-r"
+          dropdownClass="z-50"
+          placeholder="Phone number"
+        />
+      </div>
     </div>
   );
 }

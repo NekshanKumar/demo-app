@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import InputField from "./InputField";
-import PhoneInputField from "./PhoneInputField";
-import Button from "./Button";
-import Modal from "./Modal";
+import InputField from "../../ui/InputFields/InputField";
+import PhoneInputField from "../../ui/InputFields/PhoneInputField";
+import Button from "../../ui/buttons/Button";
+import Modal from "../../ui/modals/Modal";
 
 function validateEmail(email) {
   return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(in|com|co|uk|[a-z]{2,})(\.[a-z]{2,})?$/.test(email);
@@ -13,12 +13,11 @@ function getPasswordValidationStatus(p) {
     upper: /[A-Z]/.test(p),
     lower: /[a-z]/.test(p),
     num: /[0-9]/.test(p),
-    symbol: /[^A-Za-z0-9]/.test(p),
+    symbol: /[^A-Za-z0-9]/.test(p)
   };
 }
-function validateUsername(u) {
-  return u && !/\s/.test(u);
-}
+function validateUsername(u) { return u && !/\s/.test(u); }
+
 export default function UserModal({ open, onClose, onSave, user }) {
   const [form, setForm] = useState({
     fullName: "", username: "", email: "", phone: "", status: "Active", password: "", confirmPassword: ""
@@ -62,24 +61,22 @@ export default function UserModal({ open, onClose, onSave, user }) {
   const pwStatus = getPasswordValidationStatus(form.password || "");
   return (
     <Modal open={open} onClose={onClose}>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 gap-2 flex-col sm:flex-row">
         <div className="text-xl font-semibold">{user ? "Edit Employee" : "Add Employee"}</div>
         {user &&
-          <button
-            className="rounded-md border px-3 py-1 text-sm font-medium bg-primary100 text-primary600 hover:bg-primary200"
+          <button className="rounded-md border px-3 py-1 text-sm font-medium bg-primary100 text-primary600 hover:bg-primary200"
             type="button"
-            onClick={() => setShowPwdBlock(v => !v)}
-          >
+            onClick={() => setShowPwdBlock(v => !v)}>
             {showPwdBlock ? "Cancel Change Password" : "Change Password"}
           </button>
         }
       </div>
       <form onSubmit={onSubmit} className="space-y-2">
-        <div className="md:flex md:gap-4">
-          <div className="md:w-1/2">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <div className="w-full md:w-1/2">
             <InputField label="Full Name" name="fullName" value={form.fullName} onChange={handleChange} />
           </div>
-          <div className="md:w-1/2">
+          <div className="w-full md:w-1/2">
             <InputField
               label="User Name"
               name="username"
@@ -100,11 +97,11 @@ export default function UserModal({ open, onClose, onSave, user }) {
           type="email"
           style={{ borderColor: form.email === "" ? "" : validateEmail(form.email) ? "#22c55e" : "#ef4444" }}
         />
-        <div className="md:flex md:gap-4">
-          <div className="md:w-1/2">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <div className="w-full md:w-1/2">
             <PhoneInputField label="Phone Number" value={form.phone} onChange={handlePhone} />
           </div>
-          <div className="md:w-1/2">
+          <div className="w-full md:w-1/2">
             <label className="block text-sm font-medium mb-1">Status</label>
             <select name="status" value={form.status} onChange={handleChange} className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary500">
               <option value="Active">Active</option>
