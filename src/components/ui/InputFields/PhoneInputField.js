@@ -7,7 +7,8 @@ export default function PhoneInputField({ value, onChange, label }) {
       <label className="block text-sm font-medium mb-1">{label}</label>
       <div className="w-full">
         <PhoneInput
-          country={'in'}
+          country='gb'
+  regions={'europe'}
           value={value}
           onChange={onChange}
           containerClass="!w-full"

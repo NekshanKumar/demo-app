@@ -9,7 +9,7 @@ export default function InputField({ label, type = "text", value, onChange, name
       <label className="block text-sm font-medium mb-1">{label}</label>
       <input
         name={name}
-        className="w-full px-4 py-2 border border-neutral50 rounded focus:outline-none focus:ring-2 focus:ring-primary500 pr-10"
+        className="w-full px-4 py-2 border border-neutral50 rounded outline-none focus:outline-none pr-10"
         type={isPassword && visible ? "text" : type}
         value={value}
         onChange={onChange}

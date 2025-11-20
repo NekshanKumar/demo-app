@@ -37,7 +37,7 @@ export default function Header() {
         <HiOutlineMenu className="w-6 h-6 text-primary600" />
       </button>
       <div className="flex-1 flex justify-center md:justify-start">
-        <div className="font-bold text-primary600">{title}</div>
+        <div className="font-bold text-[24px] px-4 text-primary600">{title}</div>
       </div>
       <div className="hidden md:flex items-center gap-4 absolute right-6">
         <div className="w-10 h-10 bg-primary500 rounded-full flex items-center justify-center text-white text-lg">

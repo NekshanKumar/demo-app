@@ -14,7 +14,7 @@ export default function FaceCheckModal({ profileImg, mode, onSuccess, onCancel }
   const [coordinates, setCoordinates] = useState(null);
   const [animateMatch, setAnimateMatch] = useState(false);
   const intervals = useRef([]);
-
+console.log(animateMatch);
   useEffect(() => {
     let mounted = true;
     async function load() {
